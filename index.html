@@ -8,17 +8,26 @@
   <meta name="description" content="The Useless Dictionary">
   <meta name="author" content="Reece Yang">
 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Crimson Text', serif;
+    }
+
+    body {
+      background-color: #ffe8d6;
     }
 
     section {
       margin: 20rem auto;
       max-width: 800px;
       text-align: center;
+      font-size: 14pt;
     }
 
     input {
@@ -37,11 +46,6 @@
       opacity: 1;
     }
 
-    @keyframes wait {
-        from { opacity: 0; }
-        to { opacity: 0; }
-    }
-
     @keyframes fadein {
       from {opacity: 0;}
       to {opacity: 1;}
@@ -56,7 +60,7 @@
   <form>
     <label for="fname">look up a word:</label>
     <input type="text" id="word-input" onsubmit="return false">
-    <a href="#" id="define-button">define</a>
+    <a href="#" id="define-button" style="color: #2d6a4f;">define</a>
   </form>
   <div id="def-box">
   </div>
@@ -64,10 +68,12 @@
 </body>
 
 <script>
+// add learn more definitions to def-box
 var learnMore = document.createElement("a");
 learnMore.id = "learn-more";
 learnMore.href = "#";
 learnMore.innerHTML = "learn more";
+learnMore.style.color = "#2d6a4f";
 var learnMoreClicked = false;
 learnMore.onclick = function() {
   if (!learnMoreClicked) {
@@ -77,12 +83,12 @@ learnMore.onclick = function() {
     });
     learnMoreClicked = true;
   }
-
-
 };
 
+// add definition to def-box
 function defineWord() {
   document.getElementById("word-input").select();
+
   document.getElementById("def-box").innerHTML = "";
   var word = document.getElementById("word-input").value;
   addLine(document.createTextNode(word + " means " + word), "0s");
@@ -91,8 +97,8 @@ function defineWord() {
   learnMoreClicked = false;
 };
 
+// define the word onclick or when enter key is pressed
 document.getElementById("define-button").onclick = function(){defineWord()};
-
 document.getElementById("word-input").addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
       defineWord();
