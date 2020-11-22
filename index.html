@@ -9,23 +9,37 @@
   <meta name="author" content="Reece Yang">
 
   <style>
-    body {
-      width:500px;
-    	height:150px;
-    	position:absolute;
-    	left:50%;
-    	top:50%;
-    	margin:-75px 0 0 -135px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    p {
+
+    section {
+      margin: 20rem auto;
+      max-width: 800px;
       text-align: center;
-      opacity: 1;
+    }
+
+    input {
+      margin: 2rem auto;
+    }
+
+    p {
+      padding: 0.2em;
+      text-align: center;
+      opacity: 0;
       animation: fadein 2s;
-      /* transition: all 1s; */
+      animation-fill-mode: forwards;
     };
 
-    p.definition {
-      opacity: 0;
+    p .startfade {
+      opacity: 1;
+    }
+
+    @keyframes wait {
+        from { opacity: 0; }
+        to { opacity: 0; }
     }
 
     @keyframes fadein {
@@ -37,26 +51,60 @@
 </head>
 
 <body>
+  <section>
+  <h1>The Useless Dictionary</h1>
   <form>
     <label for="fname">look up a word:</label>
-    <input type="text" id="word-input" name="word">
-    <button type="button" id="define-button">define</button>
+    <input type="text" id="word-input" onsubmit="return false">
+    <a href="#" id="define-button">define</a>
   </form>
   <div id="def-box">
   </div>
+  <section>
 </body>
 
 <script>
-document.getElementById("define-button").onclick = function() {
-  document.getElementById("def-box").innerHTML = "";
-  var word = document.getElementById("word-input").value;
-  addLine(document.createTextNode(word + " means " + word));
+var learnMore = document.createElement("a");
+learnMore.id = "learn-more";
+learnMore.href = "#";
+learnMore.innerHTML = "learn more";
+var learnMoreClicked = false;
+learnMore.onclick = function() {
+  if (!learnMoreClicked) {
+    var word = document.getElementById("word-input").value;
+    word.split("").forEach((char, i) => {
+      addLine(document.createTextNode(char + " means " + char), i + "s")
+    });
+    learnMoreClicked = true;
+  }
+
+
 };
 
-function addLine(node) {
+function defineWord() {
+  document.getElementById("word-input").select();
+  document.getElementById("def-box").innerHTML = "";
+  var word = document.getElementById("word-input").value;
+  addLine(document.createTextNode(word + " means " + word), "0s");
+
+  addLine(learnMore, "1s");
+  learnMoreClicked = false;
+};
+
+document.getElementById("define-button").onclick = function(){defineWord()};
+
+document.getElementById("word-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+      defineWord();
+    }
+});
+
+// add a line that fades in with delay
+function addLine(node, delay) {
   var defNode = document.createElement("p");
   defNode.appendChild(node);
-  defNode.classList.add("definition");
+  defNode.style.animationDelay = delay;
+  defNode.classList.add("startfade");
   document.getElementById("def-box").appendChild(defNode);
 }
 </script>
