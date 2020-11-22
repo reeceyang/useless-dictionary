@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Useless Dictionary</title>
+  <meta name="description" content="The Useless Dictionary">
+  <meta name="author" content="Reece Yang">
+
+  <style>
+    body {
+      width:500px;
+    	height:150px;
+    	position:absolute;
+    	left:50%;
+    	top:50%;
+    	margin:-75px 0 0 -135px;
+    }
+    p {
+      text-align: center;
+      opacity: 1;
+      animation: fadein 2s;
+      /* transition: all 1s; */
+    };
+
+    p.definition {
+      opacity: 0;
+    }
+
+    @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+
+</head>
+
+<body>
+  <form>
+    <label for="fname">look up a word:</label>
+    <input type="text" id="word-input" name="word">
+    <button type="button" id="define-button">define</button>
+  </form>
+  <div id="def-box">
+  </div>
+</body>
+
+<script>
+document.getElementById("define-button").onclick = function() {
+  document.getElementById("def-box").innerHTML = "";
+  var word = document.getElementById("word-input").value;
+  addLine(document.createTextNode(word + " means " + word));
+};
+
+function addLine(node) {
+  var defNode = document.createElement("p");
+  defNode.appendChild(node);
+  defNode.classList.add("definition");
+  document.getElementById("def-box").appendChild(defNode);
+}
+</script>
+
+</html>
