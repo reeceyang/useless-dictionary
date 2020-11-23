@@ -68,6 +68,11 @@
 </body>
 
 <script>
+// focus on the input box on load
+window.onload = function() {
+  document.getElementById("word-input").focus();
+}
+
 // add learn more definitions to def-box
 var learnMore = document.createElement("a");
 learnMore.id = "learn-more";
