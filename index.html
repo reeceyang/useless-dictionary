@@ -50,6 +50,26 @@
       from {opacity: 0;}
       to {opacity: 1;}
     }
+
+    footer {
+      color: #808080;
+    }
+
+    footer a {
+      color: #808080;
+    }
+
+    footer a:hover {
+      color: #494949;
+    }
+
+    #define-button, #learn-more {
+      color: #2d6a4f;
+    }
+
+    #define-button:hover, #learn-more:hover {
+      color: #45A177;
+    }
   </style>
 
 </head>
@@ -60,11 +80,14 @@
   <form onsubmit="return false">
     <label for="fname">look up a word:</label>
     <input href="#" type="text" id="word-input" autocomplete="off">
-    <a href="#" id="define-button" style="color: #2d6a4f;">define</a>
+    <a href="#" id="define-button">define</a>
   </form>
   <div id="def-box">
   </div>
   <section>
+  <footer>
+    <em><p>Made with &lt;3 by <a href="https://github.com/reeceyang">Reece</a>. View <a href="https://github.com/reeceyang/useless-dictionary">source</a>.</em>
+  </footer>
 </body>
 
 <script>
@@ -78,7 +101,6 @@ var learnMore = document.createElement("a");
 learnMore.id = "learn-more";
 learnMore.href = "#";
 learnMore.innerHTML = "learn more";
-learnMore.style.color = "#2d6a4f";
 var learnMoreClicked = false;
 learnMore.onclick = function() {
   if (!learnMoreClicked) {
