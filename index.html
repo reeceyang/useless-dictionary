@@ -63,12 +63,25 @@
       color: #494949;
     }
 
-    #define-button, #learn-more {
+    #define-button, #learn-more, #share {
       color: #2d6a4f;
     }
 
-    #define-button:hover, #learn-more:hover {
+    #define-button:hover, #learn-more:hover, #share:hover {
       color: #45A177;
+    }
+
+    input {
+      background-color: #ffe8d6;
+      border: none;
+      border-bottom: 2px solid #808080;
+      outline: none;
+      font-size: inherit;
+    }
+
+    input:focus {
+      border-bottom: 2px solid #2d6a4f;
+      transition: 0.4s;
     }
   </style>
 
@@ -82,8 +95,10 @@
     <input href="#" type="text" id="word-input" autocomplete="off">
     <a href="#" id="define-button">define</a>
   </form>
+
   <div id="def-box">
   </div>
+  <div id="message-box"></div>
   <section>
   <footer>
     <em><p>Made with &lt;3 by <a href="https://github.com/reeceyang">Reece</a>. View <a href="https://github.com/reeceyang/useless-dictionary">source</a>.</em>
@@ -91,6 +106,7 @@
 </body>
 
 <script>
+
 // focus on the input box on load
 window.onload = function() {
   document.getElementById("word-input").focus();
@@ -112,6 +128,31 @@ learnMore.onclick = function() {
   }
 };
 
+// share button to copy link
+var share = document.createElement("a");
+share.id = "share";
+share.href = "#";
+share.innerHTML = "share link";
+share.onclick = function() {
+  var word = document.getElementById("word-input").value;
+  var url = new URL(document.location.href);
+  url.searchParams.set("word", document.getElementById("word-input").value);
+
+  const textArea = document.createElement('textarea');
+  textArea.textContent = url;
+  document.body.append(textArea);
+  textArea.select();
+  document.execCommand("copy");
+  textArea.parentNode.removeChild(textArea);
+
+  addMessage("copied link to clipboard!");
+};
+
+shareLearnMore = document.createElement("span");
+shareLearnMore.appendChild(share);
+shareLearnMore.appendChild(document.createTextNode(" | "));
+shareLearnMore.appendChild(learnMore);
+
 // add definition to def-box
 function defineWord() {
   document.getElementById("word-input").select();
@@ -120,7 +161,7 @@ function defineWord() {
   var word = document.getElementById("word-input").value;
   addLine(document.createTextNode(word + " means " + word), "0s");
 
-  addLine(learnMore, "1s");
+  addLine(shareLearnMore, "1s");
   learnMoreClicked = false;
 };
 
@@ -139,6 +180,27 @@ function addLine(node, delay) {
   defNode.style.animationDelay = delay;
   defNode.classList.add("startfade");
   document.getElementById("def-box").appendChild(defNode);
+}
+
+function addMessage(message) {
+  // only add the message if the box is empty
+  if (document.getElementById("message-box").innerHTML == "") {
+    var defNode = document.createElement("p");
+    defNode.appendChild(document.createTextNode(message));
+    defNode.classList.add("startfade");
+    defNode.addEventListener("animationend", () => {
+      defNode.parentNode.removeChild(defNode);
+    });
+    document.getElementById("message-box").appendChild(defNode);
+  }
+}
+
+var searchParams = new URLSearchParams(window.location.search);
+word = searchParams.get("word");
+document.getElementById("word-input").value = word;
+
+if (word != "") {
+  defineWord();
 }
 </script>
 
