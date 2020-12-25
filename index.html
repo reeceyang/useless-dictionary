@@ -203,7 +203,7 @@ var searchParams = new URLSearchParams(window.location.search);
 word = searchParams.get("word");
 document.getElementById("word-input").value = word;
 
-if (word != "") {
+if (word != "" && word != null) {
   defineWord();
 }
 </script>
