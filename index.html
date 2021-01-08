@@ -44,9 +44,20 @@
       opacity: 0;
       animation: fadein 2s;
       animation-fill-mode: forwards;
-    };
+    }
 
-    p .startfade {
+    p.message {
+      opacity: 1;
+      animation-direction: reverse;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+    }
+
+    p .startfadein {
+      opacity: 1;
+    }
+
+    p .startfadeout {
       opacity: 1;
     }
 
@@ -89,6 +100,10 @@
       border-bottom: 2px solid #2d6a4f;
       transition: 0.4s;
     }
+
+    #message-box {
+      min-height: 2em;
+    }
   </style>
 
 </head>
@@ -101,9 +116,9 @@
       <input href="#" type="text" id="word-input" autocomplete="off">
       <a href="#" id="define-button">define</a>
     </form>
-
-    <div id="def-box"></div>
     <div id="message-box"></div>
+    <div id="def-box"></div>
+
   </section>
   <footer>
     <em><p>Made with &lt;3 by <a href="https://github.com/reeceyang">Reece</a>. View <a href="https://github.com/reeceyang/useless-dictionary">source</a>.</p></em>
@@ -183,7 +198,7 @@ function addLine(node, delay) {
   var defNode = document.createElement("p");
   defNode.appendChild(node);
   defNode.style.animationDelay = delay;
-  defNode.classList.add("startfade");
+  defNode.classList.add("startfadein");
   document.getElementById("def-box").appendChild(defNode);
 }
 
@@ -192,7 +207,8 @@ function addMessage(message) {
   if (document.getElementById("message-box").innerHTML == "") {
     var defNode = document.createElement("p");
     defNode.appendChild(document.createTextNode(message));
-    defNode.classList.add("startfade");
+    defNode.classList.add("message");
+    defNode.classList.add("startfadeout");
     defNode.addEventListener("animationend", () => {
       defNode.parentNode.removeChild(defNode);
     });
