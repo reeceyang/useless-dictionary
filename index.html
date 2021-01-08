@@ -25,10 +25,14 @@
 
     body {
       background-color: #ffe8d6;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
     }
 
     section {
-      margin: 20rem auto;
+      margin: auto;
+      margin-top: 20rem;
       max-width: 800px;
       text-align: center;
       font-size: 14pt;
@@ -53,6 +57,7 @@
 
     footer {
       color: #808080;
+      margin: 2rem;
     }
 
     footer a {
@@ -90,19 +95,18 @@
 
 <body>
   <section>
-  <h1>The Useless Dictionary</h1>
-  <form onsubmit="return false">
-    <label for="fname">look up a word:</label>
-    <input href="#" type="text" id="word-input" autocomplete="off">
-    <a href="#" id="define-button">define</a>
-  </form>
+    <h1>The Useless Dictionary</h1>
+    <form onsubmit="return false">
+      <label for="fname">look up a word:</label>
+      <input href="#" type="text" id="word-input" autocomplete="off">
+      <a href="#" id="define-button">define</a>
+    </form>
 
-  <div id="def-box">
-  </div>
-  <div id="message-box"></div>
-  <section>
+    <div id="def-box"></div>
+    <div id="message-box"></div>
+  </section>
   <footer>
-    <em><p>Made with &lt;3 by <a href="https://github.com/reeceyang">Reece</a>. View <a href="https://github.com/reeceyang/useless-dictionary">source</a>.</em>
+    <em><p>Made with &lt;3 by <a href="https://github.com/reeceyang">Reece</a>. View <a href="https://github.com/reeceyang/useless-dictionary">source</a>.</p></em>
   </footer>
 </body>
 
